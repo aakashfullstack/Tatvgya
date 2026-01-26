@@ -1,3 +1,7 @@
+"""
+TATVGYA - Educational SaaS Platform
+Main FastAPI Application
+"""
 from fastapi import FastAPI, APIRouter
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -5,11 +9,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
-from typing import List
-import uuid
-from datetime import datetime, timezone
-
+from contextlib import asynccontextmanager
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -19,56 +19,90 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI()
+# Import routes
+from routes.auth import router as auth_router
+from routes.articles import router as articles_router
+from routes.educators import router as educators_router
+from routes.students import router as students_router
+from routes.admin import router as admin_router
+from routes.subjects import router as subjects_router
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan handler"""
+    # Startup: Run seed data if needed
+    from seed_data import seed_database
+    
+    # Check if data exists
+    user_count = await db.users.count_documents({})
+    if user_count == 0:
+        logging.info("No data found. Running seed script...")
+        await seed_database()
+    
+    yield
+    
+    # Shutdown
+    client.close()
+
+
+# Create the main app
+app = FastAPI(
+    title="TATVGYA API",
+    description="Educational SaaS Platform - Unlocking Wisdom, Connecting Minds",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# Include all route modules
+api_router.include_router(auth_router)
+api_router.include_router(articles_router)
+api_router.include_router(educators_router)
+api_router.include_router(students_router)
+api_router.include_router(admin_router)
+api_router.include_router(subjects_router)
 
-# Define Models
-class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
-# Add your routes to the router instead of directly to app
+# Health check endpoint
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "TATVGYA API is running", "status": "healthy"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
 
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
+@api_router.get("/health")
+async def health_check():
+    return {"status": "healthy", "database": "connected"}
+
+
+# Platform stats (public)
+@api_router.get("/stats")
+async def get_public_stats():
+    """Get public platform statistics for homepage"""
+    total_articles = await db.articles.count_documents({"status": "published"})
+    total_educators = await db.educator_profiles.count_documents({"is_approved": True})
     
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
+    # Sum all views
+    pipeline = [
+        {"$match": {"status": "published"}},
+        {"$group": {"_id": None, "total": {"$sum": "$view_count"}}}
+    ]
+    views_result = await db.articles.aggregate(pipeline).to_list(1)
+    total_views = views_result[0]["total"] if views_result else 0
     
-    return status_checks
+    return {
+        "total_articles": total_articles,
+        "total_educators": total_educators,
+        "total_views": total_views
+    }
+
 
 # Include the router in the main app
 app.include_router(api_router)
 
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -83,7 +117,3 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
