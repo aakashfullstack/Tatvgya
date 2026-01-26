@@ -162,8 +162,8 @@ export const getModerationLogs = (params = {}) => {
   return apiCall(`/admin/moderation-logs?${query}`);
 };
 
-// Contact API
-export const submitContact = (data) => apiCall('/contact', {
+// Contact API (public)
+export const submitContact = (data) => publicApiCall('/contact', {
   method: 'POST',
   body: JSON.stringify(data),
 });
