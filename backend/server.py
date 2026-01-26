@@ -103,22 +103,15 @@ async def get_public_stats():
 app.include_router(api_router)
 
 # CORS middleware - Configure specific origins for credentials support
-cors_origins = os.environ.get('CORS_ORIGINS', '').split(',')
-# Handle wildcard by allowing all common origins
-if '*' in cors_origins or not cors_origins[0]:
-    cors_origins = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://localhost:3000",
-    ]
-    # Add the preview URL pattern dynamically
-    import re
-
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],  # Will be overridden for requests with credentials
-    allow_origin_regex=r"https://.*\.preview\.emergentagent\.com|http://localhost:.*",
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://learn-hub-447.preview.emergentagent.com",
+    ],
+    allow_origin_regex=r"https://.*\.preview\.emergentagent\.com",
     allow_methods=["*"],
     allow_headers=["*"],
 )
