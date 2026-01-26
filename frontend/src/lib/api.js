@@ -42,14 +42,14 @@ export const getStats = () => publicApiCall('/stats');
 export const getSubjects = () => publicApiCall('/subjects');
 export const getSubject = (id) => publicApiCall(`/subjects/${id}`);
 
-// Article APIs
+// Article APIs (public for reading)
 export const getArticles = (params = {}) => {
   const query = new URLSearchParams(params).toString();
-  return apiCall(`/articles/?${query}`);
+  return publicApiCall(`/articles/?${query}`);
 };
 
-export const getArticle = (idOrSlug) => apiCall(`/articles/${idOrSlug}`);
-export const getRelatedArticles = (articleId, limit = 4) => apiCall(`/articles/related/${articleId}?limit=${limit}`);
+export const getArticle = (idOrSlug) => publicApiCall(`/articles/${idOrSlug}`);
+export const getRelatedArticles = (articleId, limit = 4) => publicApiCall(`/articles/related/${articleId}?limit=${limit}`);
 export const likeArticle = (articleId) => apiCall(`/articles/${articleId}/like`, { method: 'POST' });
 export const bookmarkArticle = (articleId) => apiCall(`/articles/${articleId}/bookmark`, { method: 'POST' });
 
