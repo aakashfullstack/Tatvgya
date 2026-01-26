@@ -1,6 +1,24 @@
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-// Helper function for API calls
+// Helper function for public API calls (no credentials)
+const publicApiCall = async (endpoint, options = {}) => {
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: 'An error occurred' }));
+    throw new Error(error.detail || 'Request failed');
+  }
+
+  return response.json();
+};
+
+// Helper function for authenticated API calls
 const apiCall = async (endpoint, options = {}) => {
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
@@ -19,10 +37,10 @@ const apiCall = async (endpoint, options = {}) => {
   return response.json();
 };
 
-// Public APIs
-export const getStats = () => apiCall('/stats');
-export const getSubjects = () => apiCall('/subjects');
-export const getSubject = (id) => apiCall(`/subjects/${id}`);
+// Public APIs (no auth required)
+export const getStats = () => publicApiCall('/stats');
+export const getSubjects = () => publicApiCall('/subjects');
+export const getSubject = (id) => publicApiCall(`/subjects/${id}`);
 
 // Article APIs
 export const getArticles = (params = {}) => {
