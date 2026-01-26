@@ -30,19 +30,19 @@ const About = () => {
 
   const team = [
     {
-      name: 'Dr. Aakash Verma',
+      name: 'Dr. Sumit Srivastava',
       role: 'Founder & CEO',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200'
+      initials: 'SS'
     },
     {
-      name: 'Priya Sharma',
-      role: 'Head of Content',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200'
-    },
-    {
-      name: 'Rajesh Kumar',
+      name: 'Aakash Singh',
       role: 'CTO',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200'
+      initials: 'AS'
+    },
+    {
+      name: 'Kshitiz',
+      role: 'Head of Content',
+      initials: 'K'
     }
   ];
 
@@ -187,11 +187,9 @@ const About = () => {
                 transition={{ delay: index * 0.1 }}
                 className="glass-card p-6 text-center"
               >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-24 h-24 rounded-full object-cover mx-auto mb-4 ring-4 ring-[#FFB800]/20"
-                />
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#FFB800] to-[#F59E0B] flex items-center justify-center mx-auto mb-4 ring-4 ring-[#FFB800]/20">
+                  <span className="text-black font-bold text-2xl">{member.initials}</span>
+                </div>
                 <h3 className="text-white font-semibold text-lg mb-1">{member.name}</h3>
                 <p className="text-[#FFB800] text-sm">{member.role}</p>
               </motion.div>
