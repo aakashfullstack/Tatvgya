@@ -9,7 +9,7 @@ import AnimatedCounter from '../components/AnimatedCounter';
 import { getStats, getSubjects, getArticles } from '../lib/api';
 
 const SUBJECT_ICONS = {
-  science: Flask,
+  science: FlaskConical,
   technology: Cpu,
   arts: Palette,
   commerce: TrendingUp,
