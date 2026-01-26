@@ -1,0 +1,138 @@
+{
+  "project_name": "TATVGYA",
+  "design_philosophy": {
+    "identity": "Illuminated Wisdom",
+    "core_values": ["Enlightenment", "Modernity", "Performance", "Trust"],
+    "visual_style": "Dark Glassmorphism with High-Contrast Amber Accents",
+    "theme_strategy": "Dark Mode Default (Premium/Cinematic feel)",
+    "emotional_archetype": "The Performance Pro (adapted for Education)"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Outfit, sans-serif",
+      "body": "Manrope, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-bold tracking-tight",
+      "h2": "text-4xl md:text-5xl font-semibold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body_lg": "text-lg leading-relaxed",
+      "body_base": "text-base leading-relaxed text-muted-foreground",
+      "caption": "text-sm tracking-wide uppercase text-muted-foreground"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');"
+    ]
+  },
+  "colors": {
+    "palette": {
+      "background": "#050505",
+      "surface": "#0A0A0A",
+      "surface_highlight": "#121212",
+      "primary": "#FFB800",
+      "primary_foreground": "#000000",
+      "secondary": "#1F1F1F",
+      "secondary_foreground": "#FFFFFF",
+      "accent": "#F59E0B",
+      "muted": "#27272A",
+      "muted_foreground": "#A1A1AA",
+      "border": "rgba(255, 255, 255, 0.1)",
+      "glass_bg": "rgba(10, 10, 10, 0.6)",
+      "glass_border": "rgba(255, 255, 255, 0.08)"
+    },
+    "gradients": {
+      "hero_glow": "radial-gradient(circle at center, rgba(255, 184, 0, 0.15) 0%, rgba(5, 5, 5, 0) 70%)",
+      "card_hover": "linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)",
+      "text_gradient": "linear-gradient(to right, #FFFFFF, #A1A1AA)"
+    },
+    "forbidden": ["#7351B7", "#1B93A4", "Purple Gradients", "Teal Gradients"]
+  },
+  "layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "spacing": {
+      "section_py": "py-24 md:py-32",
+      "element_gap": "gap-6 md:gap-8"
+    },
+    "grid_system": {
+      "bento": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+      "cards": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    },
+    "border_radius": {
+      "card": "rounded-2xl",
+      "button": "rounded-full",
+      "input": "rounded-xl"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#FFB800] text-black hover:bg-[#E6A600] font-semibold rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,184,0,0.3)]",
+      "secondary": "bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-full px-8 py-3 backdrop-blur-md transition-all duration-300",
+      "ghost": "text-white/70 hover:text-[#FFB800] hover:bg-transparent transition-colors"
+    },
+    "cards": {
+      "glass": "bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-[#FFB800]/30 transition-all duration-500 group relative overflow-hidden",
+      "solid": "bg-[#0A0A0A] border border-white/5 rounded-2xl p-6"
+    },
+    "inputs": {
+      "default": "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-[#FFB800]/50 focus:ring-1 focus:ring-[#FFB800]/50 rounded-xl h-12"
+    },
+    "navigation": {
+      "wrapper": "fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-2xl supports-[backdrop-filter]:bg-black/20",
+      "link": "text-sm font-medium text-white/70 hover:text-[#FFB800] transition-colors"
+    }
+  },
+  "motion": {
+    "libraries": ["framer-motion", "lenis", "@react-three/fiber", "@react-three/drei"],
+    "animations": {
+      "fade_up": {
+        "initial": { "opacity": 0, "y": 20 },
+        "whileInView": { "opacity": 1, "y": 0 },
+        "viewport": { "once": true },
+        "transition": { "duration": 0.6, "ease": "easeOut" }
+      },
+      "hover_lift": {
+        "whileHover": { "y": -5 },
+        "transition": { "duration": 0.2 }
+      },
+      "parallax": "Use useScroll and useTransform from framer-motion for vertical parallax on images and text."
+    },
+    "scroll": "Implement Lenis for smooth scrolling in the root layout."
+  },
+  "assets": {
+    "logo": {
+      "url": "https://customer-assets.emergentagent.com/job_80151a13-9706-49c2-8de6-38da4bc2b104/artifacts/j7knm7to_tatvgya%20logo.png",
+      "alt": "TATVGYA Logo",
+      "instructions": "Place in top-left of navigation. Ensure height is sufficient (h-10 or h-12) to be legible."
+    },
+    "images": {
+      "hero_bg": "https://images.unsplash.com/photo-1768528426138-eeeaa7f74414?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "hero_particles": "https://images.unsplash.com/photo-1768330273807-857d7b670cdb?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "students": [
+        "https://images.unsplash.com/photo-1571969878627-d5c8f8d15c78?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1682203533347-10b924b3c253?crop=entropy&cs=srgb&fm=jpg&q=85"
+      ],
+      "educators": [
+        "https://images.unsplash.com/photo-1511629091441-ee46146481b6?crop=entropy&cs=srgb&fm=jpg&q=85"
+      ]
+    },
+    "icons": "Use lucide-react. NO AI/Robot/Star icons. Use abstract geometric shapes or subject-specific icons (e.g., Beaker for Science, Palette for Arts)."
+  },
+  "instructions_to_main_agent": [
+    "1. INSTALLATION: Run `yarn add framer-motion lenis @react-three/fiber @react-three/drei` immediately.",
+    "2. THEME: Force Dark Mode. Do not implement a light mode toggle unless requested. The brand is 'Illuminated Wisdom' (Light in Darkness).",
+    "3. FONTS: Add the Google Fonts import to `index.css` immediately.",
+    "4. HERO: Build a Hero section with the 'hero_bg' image as a subtle parallax background. Overlay 'shine waves' using Framer Motion or a custom Canvas.",
+    "5. GLASSMORPHISM: Use the defined `glass` utility classes for all cards (Subjects, Articles, Profile).",
+    "6. LOGO: Use the provided URL. It has a yellow oval; ensure it sits on a dark background for contrast.",
+    "7. NO GENERIC ICONS: Avoid 'robot', 'brain', 'sparkles' icons. Use 'book-open', 'atom', 'feather', 'calculator' from Lucide.",
+    "8. TESTING: Add `data-testid` to all interactive elements (buttons, inputs, cards)."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI slop' aesthetics (generic gradients, centered text everywhere).",
+    "Use 2-3x more spacing than typical (p-8, p-12).",
+    "Every interaction must have a micro-animation (hover, focus, active).",
+    "Never use pure black (#000000) for backgrounds; use #050505 or #0A0A0A.",
+    "Ensure text contrast meets APCA standards (Yellow on Black is great, Grey on Black needs care)."
+  ]
+}
