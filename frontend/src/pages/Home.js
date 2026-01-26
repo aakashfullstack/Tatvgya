@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, BookOpen, Users, Eye, Flask, Cpu, Palette, TrendingUp, Globe, Scale, HeartPulse, BookMarked, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Eye, FlaskConical, Cpu, Palette, TrendingUp, Globe, Scale, HeartPulse, BookMarked, ChevronLeft, ChevronRight } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ArticleCard from '../components/ArticleCard';
