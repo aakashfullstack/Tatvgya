@@ -53,16 +53,16 @@ export const getRelatedArticles = (articleId, limit = 4) => publicApiCall(`/arti
 export const likeArticle = (articleId) => apiCall(`/articles/${articleId}/like`, { method: 'POST' });
 export const bookmarkArticle = (articleId) => apiCall(`/articles/${articleId}/bookmark`, { method: 'POST' });
 
-// Educator APIs
+// Educator APIs (public for reading profiles)
 export const getEducators = (params = {}) => {
   const query = new URLSearchParams(params).toString();
-  return apiCall(`/educators/?${query}`);
+  return publicApiCall(`/educators/?${query}`);
 };
 
-export const getEducator = (id) => apiCall(`/educators/${id}`);
+export const getEducator = (id) => publicApiCall(`/educators/${id}`);
 export const getEducatorArticles = (educatorId, params = {}) => {
   const query = new URLSearchParams(params).toString();
-  return apiCall(`/educators/${educatorId}/articles?${query}`);
+  return publicApiCall(`/educators/${educatorId}/articles?${query}`);
 };
 
 // Educator CMS APIs
